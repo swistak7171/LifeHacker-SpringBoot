@@ -21,8 +21,13 @@ class LifehackController @Autowired constructor(
     }
 
     @GetMapping
-    fun getLifehacks(): ResponseEntity<List<Lifehack>> {
+    fun getLifehacks(@RequestParam(name = "minimum_rating", required = false, defaultValue = "1.0") minimumRating: Double): ResponseEntity<List<Lifehack>> {
         val lifehacks = lifehackService.getAllLifehacks()
+            .asSequence()
+            .filter {
+                it.rating >= minimumRating
+            }
+            .toList()
 
         return ResponseEntity(lifehacks, HttpStatus.OK)
     }

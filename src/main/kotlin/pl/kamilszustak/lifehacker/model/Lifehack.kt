@@ -6,10 +6,10 @@ import javax.persistence.Table
 @Entity
 @Table(name = "lifehacks")
 data class Lifehack(
-    var text: String = ""
+    var content: String = ""
 ) : DatabaseEntity() {
 
-    var rating: Double = 0.0
+    var rating: Double = 1.0
     var ratesNumber: Int = 0
 
     fun addRating(rating: Int) {
