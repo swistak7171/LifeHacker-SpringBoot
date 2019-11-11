@@ -9,6 +9,7 @@ import pl.kamilszustak.lifehacker.service.LifehackService
 
 @RestController
 @RequestMapping("/lifehacks")
+@CrossOrigin
 class LifehackController @Autowired constructor(
     private val lifehackService: LifehackService
 ) {
