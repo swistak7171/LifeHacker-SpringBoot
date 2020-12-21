@@ -1,6 +1,5 @@
 package pl.kamilszustak.lifehacker.controller
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -10,20 +9,19 @@ import pl.kamilszustak.lifehacker.service.LifehackService
 @RestController
 @RequestMapping("/lifehacks")
 @CrossOrigin
-class LifehackController @Autowired constructor(
+class LifehackController(
     private val lifehackService: LifehackService
 ) {
-
     @PostMapping
     fun postLifehack(@RequestBody lifehack: Lifehack): ResponseEntity<Unit> {
-        lifehackService.saveLifehack(lifehack)
+        lifehackService.save(lifehack)
 
         return ResponseEntity(HttpStatus.CREATED)
     }
 
     @GetMapping
     fun getLifehacks(@RequestParam(name = "minimum_rating", required = false, defaultValue = "1.0") minimumRating: Double): ResponseEntity<List<Lifehack>> {
-        val lifehacks = lifehackService.getAllLifehacks()
+        val lifehacks = lifehackService.getAll()
             .asSequence()
             .filter {
                 it.rating >= minimumRating
@@ -35,11 +33,11 @@ class LifehackController @Autowired constructor(
 
     @PostMapping("/rating/{id}")
     fun postLifehackRating(@PathVariable id: Long, @RequestBody rating: Int): ResponseEntity<Unit> {
-        val lifehack = lifehackService.getLifehackById(id)
+        val lifehack = lifehackService.getById(id)
             ?: return ResponseEntity(HttpStatus.NOT_FOUND)
 
         lifehack.addRating(rating)
-        lifehackService.saveLifehack(lifehack)
+        lifehackService.save(lifehack)
 
         return ResponseEntity(HttpStatus.OK)
     }

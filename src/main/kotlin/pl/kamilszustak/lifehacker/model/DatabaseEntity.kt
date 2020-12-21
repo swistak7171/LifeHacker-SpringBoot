@@ -7,16 +7,15 @@ import javax.persistence.*
 
 @MappedSuperclass
 abstract class DatabaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
     @CreatedDate
-    @Column(nullable = false, updatable = false)
-    val createdAt: Date = Date()
+    @Column(name = "creation_date", nullable = false, updatable = false)
+    val creationDate: Date = Date()
 
     @LastModifiedDate
-    @Column(nullable = false)
-    val updatedAt: Date = Date()
+    @Column(name = "modification_date", nullable = false)
+    val modificationDate: Date = Date()
 }
