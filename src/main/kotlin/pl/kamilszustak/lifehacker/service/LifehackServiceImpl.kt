@@ -19,4 +19,12 @@ class LifehackServiceImpl(
 
     override fun getById(id: Long): Lifehack? =
         lifehackRepository.findByIdOrNull(id)
+
+    override fun addRating(id: Long, rating: Int): Boolean {
+        val lifehack = getById(id) ?: return false
+        lifehack.addRating(rating)
+        save(lifehack)
+
+        return true
+    }
 }

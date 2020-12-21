@@ -20,24 +20,18 @@ class LifehackController(
     }
 
     @GetMapping
-    fun getLifehacks(@RequestParam(name = "minimum_rating", required = false, defaultValue = "1.0") minimumRating: Double): ResponseEntity<List<Lifehack>> {
+    fun getAllLifehacks(): ResponseEntity<List<Lifehack>> {
         val lifehacks = lifehackService.getAll()
-            .asSequence()
-            .filter {
-                it.rating >= minimumRating
-            }
-            .toList()
 
         return ResponseEntity(lifehacks, HttpStatus.OK)
     }
 
-    @PostMapping("/rating/{id}")
-    fun postLifehackRating(@PathVariable id: Long, @RequestBody rating: Int): ResponseEntity<Unit> {
-        val lifehack = lifehackService.getById(id)
-            ?: return ResponseEntity(HttpStatus.NOT_FOUND)
-
-        lifehack.addRating(rating)
-        lifehackService.save(lifehack)
+    @PostMapping("/{id}/rating")
+    fun postLifehackRating(@PathVariable("id") id: Long, @RequestBody rating: Int): ResponseEntity<Unit> {
+        val added = lifehackService.addRating(id, rating)
+        if (!added) {
+            return ResponseEntity(HttpStatus.NOT_FOUND)
+        }
 
         return ResponseEntity(HttpStatus.OK)
     }
