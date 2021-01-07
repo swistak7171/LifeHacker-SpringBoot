@@ -10,7 +10,7 @@ class LifehackServiceImpl(
     private val lifehackRepository: LifehackRepository
 ) : LifehackService {
 
-    override fun save(lifehack: Lifehack) {
+    override fun add(lifehack: Lifehack) {
         lifehackRepository.save(lifehack)
     }
 
@@ -23,7 +23,7 @@ class LifehackServiceImpl(
     override fun addRating(id: Long, rating: Int): Boolean {
         val lifehack = getById(id) ?: return false
         lifehack.addRating(rating)
-        save(lifehack)
+        add(lifehack)
 
         return true
     }

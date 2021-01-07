@@ -10,7 +10,11 @@ import javax.persistence.Table
 data class Lifehack(
     @Column(name = "content")
     @JsonProperty("content")
-    val content: String = ""
+    val content: String = "",
+
+    @Column(name = "category_id")
+    @JsonProperty("category_id")
+    val categoryId: Long? = null,
 ) : DatabaseEntity() {
 
     @Column(name = "rating")

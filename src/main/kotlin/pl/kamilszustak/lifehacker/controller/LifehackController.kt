@@ -14,7 +14,7 @@ class LifehackController(
 ) {
     @PostMapping
     fun postLifehack(@RequestBody lifehack: Lifehack): ResponseEntity<Unit> {
-        lifehackService.save(lifehack)
+        lifehackService.add(lifehack)
 
         return ResponseEntity(HttpStatus.CREATED)
     }
