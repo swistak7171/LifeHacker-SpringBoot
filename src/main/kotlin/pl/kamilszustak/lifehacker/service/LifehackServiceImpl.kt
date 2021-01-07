@@ -14,8 +14,15 @@ class LifehackServiceImpl(
         lifehackRepository.save(lifehack)
     }
 
-    override fun getAll(): List<Lifehack> =
-        lifehackRepository.findAll()
+    override fun getAll(query: String?, categoryId: Long?): List<Lifehack> {
+        return lifehackRepository.findAllWhereContentLike(query, categoryId)
+
+        return if (query == null) {
+            lifehackRepository.findAll()
+        } else {
+            lifehackRepository.findAllWhereContentLike(query, categoryId)
+        }
+    }
 
     override fun getById(id: Long): Lifehack? =
         lifehackRepository.findByIdOrNull(id)

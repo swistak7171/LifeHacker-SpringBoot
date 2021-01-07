@@ -20,8 +20,11 @@ class LifehackController(
     }
 
     @GetMapping
-    fun getAllLifehacks(): ResponseEntity<List<Lifehack>> {
-        val lifehacks = lifehackService.getAll()
+    fun getAllLifehacks(
+        @RequestParam("query", required = false) query: String?,
+        @RequestParam("category-id", required = false) categoryId: Long?
+    ): ResponseEntity<List<Lifehack>> {
+        val lifehacks = lifehackService.getAll(query, categoryId)
 
         return ResponseEntity(lifehacks, HttpStatus.OK)
     }
