@@ -23,8 +23,12 @@ class LifehackServiceImpl(
 
     override fun addRating(id: Long, rating: Int): Boolean {
         val lifehack = getById(id) ?: return false
-        lifehack.addRating(rating)
-        add(lifehack)
+        val added = lifehack.addRating(rating)
+        if (!added) {
+            return false
+        } else {
+            add(lifehack)
+        }
 
         return true
     }

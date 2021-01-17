@@ -19,7 +19,7 @@ data class Lifehack(
 
     @Column(name = "rating")
     @JsonProperty("rating")
-    var rating: Double = 1.0
+    var rating: Double = 0.0
         private set
 
     @Column(name = "rates_number")
@@ -27,8 +27,14 @@ data class Lifehack(
     var ratesNumber: Int = 0
         private set
 
-    fun addRating(rating: Int) {
+    fun addRating(rating: Int): Boolean {
+        if (rating !in 1..5) {
+            return false
+        }
+
         val sum = (this.rating * ratesNumber) + rating
         this.rating = sum / (++ratesNumber)
+
+        return true
     }
 }
