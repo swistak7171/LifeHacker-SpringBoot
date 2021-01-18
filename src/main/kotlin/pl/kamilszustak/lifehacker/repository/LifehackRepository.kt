@@ -9,8 +9,8 @@ import pl.kamilszustak.lifehacker.model.Lifehack
 @Repository
 interface LifehackRepository : JpaRepository<Lifehack, Long> {
     @Query(
-        value = "SELECT * FROM lifehacks WHERE (:query IS NULL OR LOWER(content) LIKE '%' || LOWER(:query) || '%')" +
-            "AND (:category_id IS NULL OR category_id = :category_id)",
+        value = "SELECT * FROM lifehacks WHERE (:query IS NULL OR LOWER(content) LIKE '%' || LOWER(CAST(:query AS TEXT)) || '%')" +
+            " AND (:category_id IS NULL OR category_id = CAST(CAST(:category_id AS TEXT) AS BIGINT))",
         nativeQuery = true
     )
     fun findAllWhereContentLike(

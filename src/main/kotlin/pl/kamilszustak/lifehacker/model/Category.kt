@@ -13,17 +13,27 @@ data class Category(
     @JsonProperty("id")
     val id: Long = 0,
 
-    @Column(name = "name")
+    @Column(
+        name = "name",
+        nullable = false
+    )
     @JsonProperty("name")
     val name: String = "",
 ) {
     @CreatedDate
-    @Column(name = "creation_date", nullable = false, updatable = false)
+    @Column(
+        name = "creation_date",
+        nullable = false,
+        updatable = false
+    )
     @JsonProperty("creation_date")
     val creationDate: Date = Date()
 
     @LastModifiedDate
-    @Column(name = "modification_date", nullable = false)
+    @Column(
+        name = "modification_date",
+        nullable = false
+    )
     @JsonProperty("modification_date")
     val modificationDate: Date = Date()
 
