@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: lifehacker-backend-deploy
+  name: lifehacker-backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lifehacker-backend-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: lifehacker-backend-deploy
+    spec:
+      containers:
+        - image: image-registry.openshift-image-registry.svc:5000/labproj12/lifehacker-backend:1.8
+          name: lifehacker-backend
+          resources: {}
+          envFrom:
+            - secretRef:
+                name: lifehacker-backend-secret
+status: {}
